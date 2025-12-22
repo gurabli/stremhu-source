@@ -6,6 +6,7 @@ Ha szeretnéd elérni a StremHU Source-ot távolról, de mégsem szeretnéd publ
 
 A megoldás lényege: **VPN (Virtual Private Network)** használata, amely titkosított kapcsolatot hoz létre az eszközeid között. Ez többféle módon megoldható, egyik lehetséges eszköz erre például a Tailscale.
 
+
 **Előnyök:**
 
 - Biztonságos hozzáférés otthoni hálózatodhoz bárhonnan
@@ -242,3 +243,12 @@ Bizonyos eszközökön (pl. néhány Smart TV típus) nem telepíthető Tailscal
 Kövesd ugyanazokat a lépéseket, mint a **2. Tailscale subnet router telepítése** fejezetben, de a külső hálózat IP tartományát add meg (pl. `192.168.2.0/24`). Ne felejtsd el jóváhagyni az útvonalat a Tailscale Admin Console-ban!
 
 **Eredmény:** A külső hálózaton lévő **összes eszköz** (még azok is, amelyeken nincs Tailscale) elérik az otthoni hálózatodat.
+
+**Megjegyzések:**
+A Tailscale Wireguard-ra épül. Gyors és bizontságos (lényegesen gyorsabb, mint pl. az OpenVPN). A Tailscale nem olyan gyors, mintha natív Wireguard hálozatot konfigurálnánk, cserébe a Tailscale admin felülete sokkal barátságosabb, mint natív Wireguard esetén pl. a tűzfal manuális konfigurálása. Így talán könnyebben telepíthető és használható. Illetve a Tailscale át tud "törni" tűzfalon is, nyitott portok nélkül, de ez nem szerencsés, ilyenkor DERP relay-t használ, ami ugyan működik, de lassú. Több infó itt: https://tailscale.com/kb/1082/firewall-ports
+
+Törekedjünk Linux alatt használni, mint szinte mindent. A Wireguard további előnye, hogy kernelben fut, a Tailscale pedig (még) userspace Wireguard. Leegyszerűsítve, a natív Wireguard jobb, gyorsabb. Legöbb esetben a Tailscale sebessége is bőven elegendő. Ha meg tudod oldani a natív Wireguard hálózat kiépítését, akkor ne Tailscale legyen.
+
+Ha subnet router eszközt választunk, törekedjünk rá, hogy gigabites LAN portja legyen és lehetőleg ne egy Rpi2, Rpi3 vagy Zero. Kiválóan működik ezeken az eszközökön is, de a sebbesség azért erősen korlátozott lesz. Rpi4 már teljesen jó, komolyabb NAS szintén . Érdemes vásárlás előtt kérdezni.
+
+Fontos: Tailscale kulcsok biztonsági okokból alapból lejárnak, erre figyeljünk. Ki lehet kapcsolni, hogy ne járjon le, de az nyilván biztonsági kockázat. 
